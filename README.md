@@ -1,7 +1,7 @@
 #A Cardano wallet interface written predominantly with Dash and Pycardano.
 
 #You will need a cardano-node with ogmios or a blockfrost key to use this tool.
-# To import keys through the menu -> wallet -> keys UI the keys must be named payment.vkey, payment.skey, and if you are also importing stake keys they must be named stake.skey and stake.vkey
+#To import keys through the menu -> wallet -> keys UI the keys must be named payment.vkey, payment.skey, and if you are also importing stake keys they must be named stake.skey and stake.vkey
 
 ##IMPORTANT NOTE!!
 # StealthWallet does not support native token Decimals currently - you need to use the correct scaling derived from the cardano token registry for sending native assets!!
