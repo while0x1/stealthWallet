@@ -83,4 +83,4 @@ app.layout = html.Div(children = [
 
 
 if __name__ == "__main__":
-    app.run_server(host='192.168.88.174',debug=False)
+    app.run_server(host='0.0.0.0',debug=False)
