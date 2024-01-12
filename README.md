@@ -15,9 +15,13 @@ pip install flask
 Create a .env File in the root directory to insert blockfrost keys and to specify UTXOS to exclude from transactions (collateral UTXOs)
 
 BF_MAINNET=<mainnet...>
+
 BF_PREPROD=<preprod...>
+
 NETWORK=MAINNET
+
 COLD_ADDRESS=
+
 EXCLUDE_UTXOS='{"addr1...":"txHash#txId"}'
 
 
