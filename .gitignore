@@ -1,6 +1,6 @@
 .env
 /keys
-/dash/__pycache__
+__pycache__
 *keys*
 *backup*
 /dash/utils/__pycache__
