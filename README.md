@@ -2,6 +2,10 @@
 
 #You will need a cardano-node with ogmios or a blockfrost key to use this tool.
 
+##IMPORTANT NOTE!!
+# StealthWallet does not support native token Decimals currently - you need to use the correct scaling derived
+# from the cardano token registry for sending native assets!!
+
 git clone https://github.com/while0x1/stealthWallet.git
 
 cd stealthWallet
