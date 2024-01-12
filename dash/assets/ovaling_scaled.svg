@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="250"
+   height="300"
+   version="1.1"
+   id="svg30"
+   sodipodi:docname="ovaling_scaled.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   viewBox="0 0 400 480">
+  <metadata
+     id="metadata34">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     id="namedview32"
+     showgrid="false"
+     inkscape:zoom="0.71594562"
+     inkscape:cx="-316.94518"
+     inkscape:cy="304.51063"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg30"
+     inkscape:document-rotation="0"
+     scale-x="1.6" />
+  <defs
+     id="DEF">
+    <linearGradient
+       id="rhue"
+       gradientTransform="scale(1.8257419,0.54772256)"
+       x1="-54.772255"
+       y1="-54.772255"
+       x2="54.772255"
+       y2="-54.772255"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         id="ro0"
+         stop-color="red" />
+      <stop
+         offset=".25"
+         id="ro1"
+         stop-color="blue" />
+      <stop
+         offset=".75"
+         id="ro2"
+         stop-color="yellow" />
+      <stop
+         offset="1"
+         id="ro3"
+         stop-color="green" />
+    </linearGradient>
+  </defs>
+  <ellipse
+     cx="198.2251"
+     cy="242.50679"
+     id="ellipse8"
+     rx="50.043293"
+     ry="50.742222"
+     opacity="0.4"
+     style="stroke-width:0.629894">
+    <animate
+       attributeName="fill"
+       dur="5s"
+       values="#ff8; #f88; #f8f; #88f; #8ff; #8f8"
+       repeatCount="indefinite" />
+  </ellipse>
+  <g
+     id="penta"
+     transform="matrix(0.62554118,0,0,0.63427777,16.818154,83.937354)">
+    <g
+       id="R1"
+       transform="translate(200,250)">
+      <ellipse
+         cx="0"
+         cy="0"
+         rx="100"
+         ry="30"
+         opacity="0.4"
+         fill="url(#rhue)"
+         id="ellipse10"
+         style="fill:url(#rhue)">
+        <animateTransform
+           attributeName="transform"
+           type="rotate"
+           dur="7s"
+           from="0"
+           to="360"
+           repeatCount="indefinite" />
+        <animate
+           attributeName="cx"
+           dur="8s"
+           values="-20; 120; -20"
+           repeatCount="indefinite" />
+        <animate
+           attributeName="ry"
+           dur="3s"
+           values="10; 60; 10"
+           repeatCount="indefinite" />
+      </ellipse>
+    </g>
+    <use
+       xlink:href="#R1"
+       transform="rotate(30,300,250)"
+       id="use13"
+       x="0"
+       y="0"
+       width="100%"
+       height="100%" />
+    <use
+       xlink:href="#R1"
+       transform="rotate(60,300,250)"
+       id="use15"
+       x="0"
+       y="0"
+       width="100%"
+       height="100%" />
+    <use
+       xlink:href="#R1"
+       transform="rotate(90,300,250)"
+       id="use17"
+       x="0"
+       y="0"
+       width="100%"
+       height="100%" />
+    <use
+       xlink:href="#R1"
+       transform="rotate(120,300,250)"
+       id="use19"
+       x="0"
+       y="0"
+       width="100%"
+       height="100%" />
+  </g>
+  <use
+     xlink:href="#penta"
+     transform="matrix(0.30901699,0.96433939,-0.9379566,0.30901699,364.43103,-23.588196)"
+     id="use22"
+     x="0"
+     y="0"
+     width="100%"
+     height="100%" />
+  <use
+     xlink:href="#penta"
+     transform="matrix(-0.80901699,0.59599452,-0.57968906,-0.80901699,499.17112,320.55786)"
+     id="use24"
+     x="0"
+     y="0"
+     width="100%"
+     height="100%" />
+  <use
+     xlink:href="#penta"
+     transform="matrix(-0.80901699,-0.59599452,0.57968906,-0.80901699,218.01406,556.84002)"
+     id="use26"
+     x="0"
+     y="0"
+     width="100%"
+     height="100%" />
+  <use
+     xlink:href="#penta"
+     transform="matrix(0.30901699,-0.96433939,0.9379566,0.30901699,-90.490671,358.72436)"
+     id="use28"
+     x="0"
+     y="0"
+     width="100%"
+     height="100%" />
+</svg>
