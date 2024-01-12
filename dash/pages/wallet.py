@@ -30,7 +30,7 @@ net = env_dict.get('NETWORK')
 if net == 'MAINNET':
     pyNet = Network.MAINNET
 else:
-    pyNet = Network.PREPROD
+    pyNet = Network.TESTNET
 #min_lovelace_post_alonzo
 
 if pyNet == Network.MAINNET:

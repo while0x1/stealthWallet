@@ -1,16 +1,14 @@
-A Cardano wallet interface written predominantly with Dash and Pycardano.
+#A Cardano wallet interface written predominantly with Dash and Pycardano.
 
-You will need a cardano-node with ogmios or a blockfrost key to use this tool.
+#You will need a cardano-node with ogmios or a blockfrost key to use this tool.
 
-You can generate a key @ https://blockfrost.io/
+git clone https://github.com/while0x1/stealthWallet.git
 
-pip install pycardano
-pip install dash
-pip install python-dotenv
-pip install cryptography
-pip install base64
-pip install dash-bootstrap-components
-pip install flask
+cd stealthWallet
+
+#generate a key @ https://blockfrost.io/
+
+pip install pycardano dash python-dotenv cryptography dash-bootstrap-components flask
 
 Create a .env File in the root directory to insert blockfrost keys and to specify UTXOS to exclude from transactions (collateral UTXOs)
 
@@ -24,6 +22,7 @@ COLD_ADDRESS=
 
 EXCLUDE_UTXOS='{"addr1...":"txHash#txId"}'
 
+cd dash
 
-
+python3 app.py
 

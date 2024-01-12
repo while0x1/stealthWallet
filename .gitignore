@@ -4,3 +4,5 @@ __pycache__
 *keys*
 *backup*
 /dash/utils/__pycache__
+!/dash/utils/parsekeys.py
+

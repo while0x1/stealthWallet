@@ -24,7 +24,7 @@ net = env_dict.get('NETWORK')
 if net == 'MAINNET':
     pyNet = Network.MAINNET
 else:
-    pyNet = Network.PREPROD
+    pyNet = Network.TESTNET
 
 
 if pyNet == Network.MAINNET:
