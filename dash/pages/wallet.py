@@ -23,8 +23,9 @@ BF_MAINNET = env_dict.get('BF_MAINNET')
 COLD_ADDRESS = env_dict.get('COLD_ADDRESS')
 BF_PREPROD = env_dict.get('BF_PREPROD')
 EXCLUDE_UTXOS_S = env_dict.get('EXCLUDE_UTXOS')
-EXCLUDE_UTXOS = json.loads(EXCLUDE_UTXOS_S)
-print(EXCLUDE_UTXOS)
+if len(EXCLUDE_UTXOS_S) > 0:
+    EXCLUDE_UTXOS = json.loads(EXCLUDE_UTXOS_S)
+    print(EXCLUDE_UTXOS)
 
 net = env_dict.get('NETWORK')
 if net == 'MAINNET':

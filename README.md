@@ -6,7 +6,7 @@ git clone https://github.com/while0x1/stealthWallet.git
 
 cd stealthWallet
 
-#generate a key @ https://blockfrost.io/
+#generate mainnet and preprod keys @ https://blockfrost.io/
 
 pip install pycardano dash python-dotenv cryptography dash-bootstrap-components flask
 
