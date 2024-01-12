@@ -551,11 +551,14 @@ def update_output(n_clicks,list_of_contents, list_of_names, list_of_dates):
                 print(e)
         divs=[]
         token_options=[]
-        for asset in walletinfo['assets']:
-            print(asset)
-            #options = [{'label':v, 'value':k } for k,v in ddict.items()],
-            token_options.append({'label':asset['assetname'], 'value':asset['policy'] + '.'+ asset['assethex']})
-            divs.append(make_card(asset))
+        if walletinfo != '':
+            for asset in walletinfo['assets']:
+                print(asset)
+                #options = [{'label':v, 'value':k } for k,v in ddict.items()],
+                token_options.append({'label':asset['assetname'], 'value':asset['policy'] + '.'+ asset['assethex']})
+                divs.append(make_card(asset))
+        else: 
+            print('Error - Cant Get Wallet Information!')
         children = [
             parse_contents(c, n, d) for c, n, d in
             zip(list_of_contents, list_of_names, list_of_dates)]
