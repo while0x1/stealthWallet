@@ -14,7 +14,7 @@ import base64
 from utils.crypto import *
 from utils.getutxos import *
 from utils.parsekeys import *
-
+import sys
 
 cwd = os.getcwd()
 env_dict = dotenv_values()
@@ -23,10 +23,15 @@ BF_MAINNET = env_dict.get('BF_MAINNET')
 COLD_ADDRESS = env_dict.get('COLD_ADDRESS')
 BF_PREPROD = env_dict.get('BF_PREPROD')
 EXCLUDE_UTXOS_S = env_dict.get('EXCLUDE_UTXOS')
-if len(EXCLUDE_UTXOS_S) > 0:
-    EXCLUDE_UTXOS = json.loads(EXCLUDE_UTXOS_S)
-    print(EXCLUDE_UTXOS)
-
+try:
+    if len(EXCLUDE_UTXOS_S) > 0:
+        EXCLUDE_UTXOS = json.loads(EXCLUDE_UTXOS_S)
+        print(EXCLUDE_UTXOS)
+except Exception as e:
+    print(e)
+    sys.exit("Environment Variables not configured correctly!")
+    
+    
 net = env_dict.get('NETWORK')
 if net == 'MAINNET':
     pyNet = Network.MAINNET
@@ -238,6 +243,7 @@ def tx_submit_click(n,password,wallet_info,output_address,ADA,keycontents,keynam
             if exclude_utxo != '':
                 builder.excluded_inputs.append(exclude_utxo)
             #pyoutputaddress = Address.from_primitive(output_address)
+            
             if len(EXCLUDE_UTXOS) > 0:
                 for n in EXCLUDE_UTXOS:
                     if address_store == n:
