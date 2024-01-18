@@ -87,7 +87,7 @@ tx_form = dbc.Form(
 upload = dcc.Upload(
         id='upload-keys',
         children=html.Div([
-            'Drag or Select stake and payment keys',
+            'Drag or Select stake and payment keys all at once',
         ]),style={
             'width': 'auto',
             'height': '60px',
