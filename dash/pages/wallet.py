@@ -295,11 +295,11 @@ def tx_submit_click(n,password,wallet_info,output_address,ADA,keycontents,keynam
                                     builder.excluded_inputs.append(exclude_utxo)
 
                     for n in wallet_info:
-                        ban_utxo = False                
+                        allow_utxo = True                
                         for i in EXCLUDE_UTXOS:
                             if EXCLUDE_UTXOS[i] in n:
-                                ban_utxo = True
-                        if not ban_utxo:
+                                allow_utxo = False
+                        if allow_utxo:
                             tx_h = list(n.keys())[0]
                             print(tx_h)
                             add_utxo = UTxO.from_cbor(n[tx_h])
@@ -311,7 +311,7 @@ def tx_submit_click(n,password,wallet_info,output_address,ADA,keycontents,keynam
 
             signed_tx = builder.build_and_sign([keyDict[0]], change_address=change_address)  
             print(signed_tx)
-            #chain_context.submit_tx(signed_tx)
+            chain_context.submit_tx(signed_tx)
             'https://cexplorer.io/tx/txhash'
             return 'Success! ' + str(signed_tx.id), 'https://cexplorer.io/tx/' + str(signed_tx.id),{'display':'block'}
             #print(wallet_info)
