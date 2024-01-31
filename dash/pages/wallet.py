@@ -15,6 +15,16 @@ from utils.crypto import *
 from utils.getutxos import *
 from utils.parsekeys import *
 import sys
+import dash_daq as daq
+
+
+sendall = daq.BooleanSwitch(
+  id='SENDALL',
+  on=False,
+  label="SEND ALL",
+  labelPosition="top",
+  color="dodgerblue",
+)
 
 cwd = os.getcwd()
 env_dict = dotenv_values()
@@ -72,6 +82,7 @@ tx_form = dbc.Form(
             dbc.Label('Exclude Utxos:'),
             dbc.Col(dbc.Input(type='text',id='exclude',placeholder='txHash#txId'),width='50%'),
             dbc.Col(dbc.Input(type="password", placeholder="Enter decryption key if necessary", id='tx_password', value="")),
+            sendall,
             #'https://cexplorer.io/tx/txhash'
             #html.Div(id="tx_message"),
             html.Div(html.A(href=None, target="_blank", id='tx_message'),id='tx_link', style={'display':'none'}),
@@ -79,6 +90,7 @@ tx_form = dbc.Form(
             dbc.Row([
                 dbc.Col(dbc.Button("Submit",id="tx_submit", color="primary", n_clicks=0),width='auto'),
                 dbc.Col(dbc.Button("CBOR",id="aircbor", color="primary", n_clicks=0),width='auto'),
+                
             ],className="g-2")
         ],
         className="g-2",)
@@ -205,7 +217,7 @@ air_modal = html.Div(
 @callback(
     Output("tx_message", "children"),
     Output("tx_message", "href"),
-    Output("tx_link", "style"),  
+    Output("tx_link", "style"),
     Input("tx_submit", "n_clicks"),
     State('tx_password', 'value'),
     State('wallet_info','data'),
@@ -217,14 +229,13 @@ air_modal = html.Div(
     State('exclude', 'value'),
     State('assetid', 'value'),
     State('asset_amount', 'value'),
+    State('SENDALL', 'on')
 )
-def tx_submit_click(n,password,wallet_info,output_address,ADA,keycontents,keynames,address_store,exclude,assetid,asset_amount):
+def tx_submit_click(n,password,wallet_info,output_address,ADA,keycontents,keynames,address_store,exclude,assetid,asset_amount,sendall):
     exclude_utxo = ''
     if n > 0:
-        
         try:
-            if ADA is None:
-                raise Exception
+
             print(output_address)
             print(ADA)
 
@@ -232,43 +243,68 @@ def tx_submit_click(n,password,wallet_info,output_address,ADA,keycontents,keynam
             #print(keyDict)
             #print(wallet_info)
             print(address_store)
-            lovelaces = int(ADA) * 1000000
-            change_address = Address.from_primitive(address_store)
-            builder = TransactionBuilder(chain_context)
-            builder.add_input_address(change_address)
-            for n in wallet_info:
-                if exclude in n:
-                    print(n[exclude])
-                    exclude_utxo = UTxO.from_cbor(n[exclude])
-            if exclude_utxo != '':
-                builder.excluded_inputs.append(exclude_utxo)
-            #pyoutputaddress = Address.from_primitive(output_address)
-            
-            if len(EXCLUDE_UTXOS) > 0:
-                for n in EXCLUDE_UTXOS:
-                    if address_store == n:
-                        for q in wallet_info:
-                            if EXCLUDE_UTXOS[n] in q:
-                                exclude_utxo = UTxO.from_cbor(q[EXCLUDE_UTXOS[n]])
-                                #print(exclude_utxo)
-                                builder.excluded_inputs.append(exclude_utxo)    
-            if ADA is not None:
-                builder.add_output(TransactionOutput.from_primitive([output_address, lovelaces]))
-            if assetid is not None and asset_amount is not None:
+            if not sendall:
+                if ADA is None:
+                    raise Exception('No Ada specified to send!')
+                lovelaces = int(ADA) * 1000000
+                change_address = Address.from_primitive(address_store)
+                builder = TransactionBuilder(chain_context)
+                builder.add_input_address(change_address)
+                for n in wallet_info:
+                    if exclude in n:
+                        print(n[exclude])
+                        exclude_utxo = UTxO.from_cbor(n[exclude])
+                if exclude_utxo != '':
+                    builder.excluded_inputs.append(exclude_utxo)
+                #pyoutputaddress = Address.from_primitive(output_address)
+                
+                if len(EXCLUDE_UTXOS) > 0:
+                    for n in EXCLUDE_UTXOS:
+                        if address_store == n:
+                            for q in wallet_info:
+                                if EXCLUDE_UTXOS[n] in q:
+                                    exclude_utxo = UTxO.from_cbor(q[EXCLUDE_UTXOS[n]])
+                                    #print(exclude_utxo)
+                                    builder.excluded_inputs.append(exclude_utxo)    
+                if ADA is not None:
+                    builder.add_output(TransactionOutput.from_primitive([output_address, lovelaces]))
+                if assetid is not None and asset_amount is not None:
 
-                policy = assetid[0:assetid.find('.')]
-                hexname = assetid[assetid.find('.')+1:]
+                    policy = assetid[0:assetid.find('.')]
+                    hexname = assetid[assetid.find('.')+1:]
 
-                swap_asset = MultiAsset.from_primitive({bytes.fromhex(policy): {bytes.fromhex(hexname): asset_amount}})
-                print(swap_asset)
+                    swap_asset = MultiAsset.from_primitive({bytes.fromhex(policy): {bytes.fromhex(hexname): asset_amount}})
+                    print(swap_asset)
 
-                pyaddress = Address.from_primitive(output_address)
-                min_val = min_lovelace(chain_context, output=TransactionOutput(pyaddress, Value(0, swap_asset)))
-                print(min_val)
-                builder.add_output(TransactionOutput(output_address, Value(min_val, swap_asset)))
+                    pyaddress = Address.from_primitive(output_address)
+                    min_val = min_lovelace(chain_context, output=TransactionOutput(pyaddress, Value(0, swap_asset)))
+                    print(min_val)
+                    builder.add_output(TransactionOutput(output_address, Value(min_val, swap_asset)))
+            else:
+                #SEND ALL
+                builder = TransactionBuilder(chain_context)
+                change_address = Address.from_primitive(output_address)
+                
+                if len(EXCLUDE_UTXOS) > 0:
+                    for n in EXCLUDE_UTXOS:
+                        if address_store == n:
+                            for q in wallet_info:
+                                if EXCLUDE_UTXOS[n] in q:
+                                    exclude_utxo = UTxO.from_cbor(q[EXCLUDE_UTXOS[n]])
+                                    #print(exclude_utxo)
+                                    builder.excluded_inputs.append(exclude_utxo)
+                                else:    
+                                    tx_h = list(q.keys())[0]
+                                    print(tx_h)
+                                    add_utxo = UTxO.from_cbor(q[tx_h])
+                                    builder.add_input(add_utxo)
+
+                
             #print(keyDict[0])
             #builder.required_signers = [ExtendedVerificationKey.from_signing_key(keyDict[0]).hash()]
-            signed_tx = builder.build_and_sign([keyDict[0]], change_address=change_address)
+
+            signed_tx = builder.build_and_sign([keyDict[0]], change_address=change_address)  
+            print(signed_tx)
             chain_context.submit_tx(signed_tx)
             'https://cexplorer.io/tx/txhash'
             return 'Success! ' + str(signed_tx.id), 'https://cexplorer.io/tx/' + str(signed_tx.id),{'display':'block'}
@@ -427,17 +463,18 @@ def toggle_modal(n1, n2, is_open):
     Output("token_selector", "value"),
     Output("tx_password", "value"),
     Output("tx_link", "style",allow_duplicate=True),
+    Output('SENDALL', 'on'),
     [   Input("sendopen", "n_clicks"), 
         Input("sendclose", "n_clicks"),
         Input("aircbor", "n_clicks"),
         ],
-    [State("sendmodal", "is_open")],
+    [State("sendmodal", "is_open"),State('SENDALL', 'on')],
     prevent_initial_call=True
 )
-def toggle_modal(n1, n2,n3, is_open):
+def toggle_modal(n1, n2,n3, is_open,sendall):
     if n1 or n2 or n3:
-        return not is_open,None,None,None,None,None,None,None,'',{'display':'none'}
-    return is_open,None,None,None,None,None,None,None,'',{'display':'none'}
+        return not is_open,None,None,None,None,None,None,None,'',{'display':'none'},False
+    return is_open,None,None,None,None,None,None,None,'',{'display':'none'},False
 
 divs = []
 
