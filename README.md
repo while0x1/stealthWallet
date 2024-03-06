@@ -21,7 +21,7 @@ BF_MAINNET=<mainnet...>\
 BF_PREPROD=<preprod...>\
 NETWORK=MAINNET\
 COLD_ADDRESS=\
-EXLUDE_UTXOS={}
+EXCLUDE_UTXOS={}
 
 #if excluding utxos from spending the following format should be followed:
     #EXCLUDE_UTXOS='{"addr1...":"txHash#txId"}'
