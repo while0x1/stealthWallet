@@ -1,3 +1,6 @@
+
+'''
+
 from dash import html,  Input, Output, callback, State
 import dash
 import dash_bootstrap_components as dbc
@@ -17,8 +20,6 @@ import sys
 import dash_daq as daq
 
 
-
-'''
 sendall = daq.BooleanSwitch(
   id='SENDALL',
   on=False,
@@ -26,14 +27,7 @@ sendall = daq.BooleanSwitch(
   labelPosition="top",
   color="dodgerblue",
 )
-'''
 
-sendall = dcc.Slider(id='SENDALL' , min = 0, max= 1, step=1, value=0,
-    marks={
-        0: {'label': ''},
-        1: {'label': 'SEND ALL', 'style': {'color': '#f50', 'font-weight': 'bold'}},
-    }  
-)
 
 
 cwd = os.getcwd()
@@ -67,7 +61,7 @@ else:
     BF_PROJ_ID = BF_PREPROD
     chain_context = BlockFrostChainContext(project_id=BF_PROJ_ID,base_url=ApiUrls.preprod.value,)          
 
-dash.register_page(__name__, path="/nodaq_wallet")
+#dash.register_page(__name__, path="/wallet")
 
 token_selector = dcc.Dropdown(
         id = 'token_selector',
@@ -92,9 +86,7 @@ tx_form = dbc.Form(
             dbc.Label('Exclude Utxos:'),
             dbc.Col(dbc.Input(type='text',id='exclude',placeholder='txHash#txId'),width='50%'),
             dbc.Col(dbc.Input(type="password", placeholder="Enter decryption key if necessary", id='tx_password', value="")),
-            dbc.Row([
-                dbc.Col(sendall, width='10%')
-                ],className="g-2"),
+            sendall,
             #'https://cexplorer.io/tx/txhash'
             #html.Div(id="tx_message"),
             html.Div(html.A(href=None, target="_blank", id='tx_message'),id='tx_link', style={'display':'none'}),
@@ -239,12 +231,10 @@ air_modal = html.Div(
     State('exclude', 'value'),
     State('assetid', 'value'),
     State('asset_amount', 'value'),
-    State('SENDALL', 'value')
+    State('SENDALL', 'on')
 )
 def tx_submit_click(n,password,wallet_info,output_address,ADA,keycontents,keynames,address_store,exclude,assetid,asset_amount,sendall):
     exclude_utxo = ''
-    print('SENDALL VALUE')
-    print(sendall)
     if n > 0:
         try:
 
@@ -255,7 +245,7 @@ def tx_submit_click(n,password,wallet_info,output_address,ADA,keycontents,keynam
             #print(keyDict)
             #print(wallet_info)
             print(address_store)
-            if sendall < 1:
+            if not sendall:
                 if ADA is None:
                     raise Exception('No Ada specified to send!')
                 lovelaces = int(ADA) * 1000000
@@ -296,7 +286,7 @@ def tx_submit_click(n,password,wallet_info,output_address,ADA,keycontents,keynam
                 #SEND ALL
                 builder = TransactionBuilder(chain_context)
                 change_address = Address.from_primitive(output_address)
-                #print('You Are Here!')
+                
                 if len(EXCLUDE_UTXOS) > 0:
                     for n in EXCLUDE_UTXOS:
                         if address_store == n:
@@ -481,18 +471,18 @@ def toggle_modal(n1, n2, is_open):
     Output("token_selector", "value"),
     Output("tx_password", "value"),
     Output("tx_link", "style",allow_duplicate=True),
-    Output('SENDALL', 'value'),
+    Output('SENDALL', 'on'),
     [   Input("sendopen", "n_clicks"), 
         Input("sendclose", "n_clicks"),
         Input("aircbor", "n_clicks"),
         ],
-    [State("sendmodal", "is_open"),State('SENDALL', 'value')],
+    [State("sendmodal", "is_open"),State('SENDALL', 'on')],
     prevent_initial_call=True
 )
 def toggle_modal(n1, n2,n3, is_open,sendall):
     if n1 or n2 or n3:
-        return not is_open,None,None,None,None,None,None,None,'',{'display':'none'},0
-    return is_open,None,None,None,None,None,None,None,'',{'display':'none'},0
+        return not is_open,None,None,None,None,None,None,None,'',{'display':'none'},False
+    return is_open,None,None,None,None,None,None,None,'',{'display':'none'},False
 
 divs = []
 
@@ -630,4 +620,4 @@ def update_output(n_clicks,list_of_contents, list_of_names, list_of_dates):
     else:
         return [],['','',''],'','','',[],[]
 
-
+'''
