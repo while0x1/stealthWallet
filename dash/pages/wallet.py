@@ -67,7 +67,7 @@ else:
     BF_PROJ_ID = BF_PREPROD
     chain_context = BlockFrostChainContext(project_id=BF_PROJ_ID,base_url=ApiUrls.preprod.value,)          
 
-dash.register_page(__name__, path="/nodaq_wallet")
+dash.register_page(__name__, path="/wallet")
 
 token_selector = dcc.Dropdown(
         id = 'token_selector',
