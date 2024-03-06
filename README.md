@@ -7,26 +7,46 @@
 ##IMPORTANT NOTE!!
 # StealthWallet does not support native token Decimals currently - you need to use the correct scaling derived from the cardano token registry for sending native assets!!
 
+
+![show](dash/assets/image.jpg)
+## Build 
+
+Please refer https://blockfrost.io/  for generating mainnet and preprod keys 
+
+```
 git clone https://github.com/while0x1/stealthWallet.git
-
 cd stealthWallet
+pip install -r requirements.txt
+```
 
-#generate mainnet and preprod keys @ https://blockfrost.io/
+## Environment 
 
-pip install pycardano dash python-dotenv cryptography dash-bootstrap-components flask dash_daq
+Create a .env File in the root directory to insert blockfrost keys and to specify UTXOS to exclude from #transactions (collateral UTXOs) 
 
-#Create a .env File in the root directory to insert blockfrost keys and to specify UTXOS to exclude from #transactions (collateral UTXOs)
+for mainnet `.env`
+```
+BF_MAINNET=<mainnet...> 
+NETWORK=MAINNET
+COLD_ADDRESS=
+EXCLUDE_UTXOS={}
+```
 
-BF_MAINNET=<mainnet...>\
-BF_PREPROD=<preprod...>\
-NETWORK=MAINNET\
-COLD_ADDRESS=\
-EXLUDE_UTXOS={}
+for preprod `.env`
+```mainnet
+BF_PREPROD=<preprod...>
+NETWORK=PREPROD
+COLD_ADDRESS=
+EXCLUDE_UTXOS={}
+```
 
-#if excluding utxos from spending the following format should be followed:
-    #EXCLUDE_UTXOS='{"addr1...":"txHash#txId"}'
+if excluding utxos from spending the following format should be followed:
+```
+EXCLUDE_UTXOS='{"addr1...":"txHash#txId"}'
+```
 
-cd dash
-
+## Run
+```
+cd dash 
 python3 app.py
+```
 
