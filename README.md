@@ -8,10 +8,10 @@
 # StealthWallet does not support native token Decimals currently - you need to use the correct scaling derived from the cardano token registry for sending native assets!!
 
 
-![show](dash/assets/image.jpg)
+![show](dash/assets/stealthwallet_landing_image.jpg)
 ## Build 
 
-<<<<<<< main
+
 Please refer https://blockfrost.io/  for generating mainnet and preprod keys 
 =======
 BF_MAINNET=<mainnet...>\
@@ -24,7 +24,6 @@ EXCLUDE_UTXOS={}
     #EXCLUDE_UTXOS='{"addr1...":"txHash#txId"}'
 
 cd dash
->>>>>>> main
 
 ```
 git clone https://github.com/while0x1/stealthWallet.git
